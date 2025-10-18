@@ -57,8 +57,8 @@ app.get('/users/:id', (req, res) => {
 
 // crear un nuevo usuario
 app.post('/users', (req, res) => {
-    const { id, first_name, phone, email, address, age, photoUrl } = req.body;
-    const user = { id: (users.length + 1).toString(), first_name, phone, email, address, age, photoUrl };
+    const { name, phone, email, address, age, photoUrl } = req.body;
+    const user = { id: (users.length + 1).toString(), name, phone, email, address, age, photoUrl };
     users.unshift(user);
     res.json({
         message: 'Usuario creado',
