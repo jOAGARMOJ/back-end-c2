@@ -54,3 +54,18 @@ app.get('/users/:id', (req, res) => {
 });
 
 
+// crear un nuevo usuario
+app.post('/users', (req, res) => {
+    const { id, firsht_name, phone, email, address, age, photoUrl } = req.body;
+    const user = { id: (users.length + 1), firsht_name, phone, email, address, age, photoUrl };
+    users.push(user);
+    res.json({
+        message: 'Usuario creado',
+        timestamp: new Date().toISOString(),
+        status: 'Success',
+        user: user
+    });
+});
+
+
+
