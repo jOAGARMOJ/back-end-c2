@@ -59,7 +59,7 @@ app.get('/users/:id', (req, res) => {
 app.post('/users', (req, res) => {
     const { id, first_name, phone, email, address, age, photoUrl } = req.body;
     const user = { id: (users.length + 1).toString(), first_name, phone, email, address, age, photoUrl };
-    users.push(user);
+    users.unshift(user);
     res.json({
         message: 'Usuario creado',
         timestamp: new Date().toISOString(),
