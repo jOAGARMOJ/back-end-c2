@@ -31,3 +31,26 @@ app.get('/users', (req, res) => {
         users: users
     });
 });
+
+
+// obtener un usuario por id
+app.get('/users/:id', (req, res) => {
+    const { id } = req.params;
+    const user = users.find(u => u.id === parseInt(id));
+
+    if (!user) {
+        return res.status(404).json({
+            message: 'Usuario no encontrado',
+            timestamp: new Date().toISOString(),
+            status: 'Error'
+        });
+    }
+    res.json({
+        message: 'Usuario encontrado',
+        timestamp: new Date().toISOString(),
+        status: 'Success',
+        user: user
+    });
+});
+
+
