@@ -1,17 +1,18 @@
 const express = require('express');
-const users = require('./data/Users');
 const app = express();
 const port = 3000;
+const users = require('./data/Users');
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Server is running');
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
 });
 
-app.listen(port, () => {
-    console.log(`Server is listening on http://localhost:${port}`);
-});
+
 
 // Ruta raíz que responde con un mensaje JSON
 app.get('/', (req, res) => {
@@ -36,7 +37,7 @@ app.get('/users', (req, res) => {
 // obtener un usuario por id
 app.get('/users/:id', (req, res) => {
     const { id } = req.params;
-    const user = users.find(u => u.id === parseInt(id));
+    const user = users.find(u => u.id === id);
 
     if (!user) {
         return res.status(404).json({
@@ -56,8 +57,8 @@ app.get('/users/:id', (req, res) => {
 
 // crear un nuevo usuario
 app.post('/users', (req, res) => {
-    const { id, firsht_name, phone, email, address, age, photoUrl } = req.body;
-    const user = { id: (users.length + 1), firsht_name, phone, email, address, age, photoUrl };
+    const { id, first_name, phone, email, address, age, photoUrl } = req.body;
+    const user = { id: (users.length + 1).toString(), first_name, phone, email, address, age, photoUrl };
     users.push(user);
     res.json({
         message: 'Usuario creado',
@@ -69,3 +70,6 @@ app.post('/users', (req, res) => {
 
 
 
+app.listen(port, () => {
+    console.log(`Server is listening on http://localhost:${port}`);
+});
