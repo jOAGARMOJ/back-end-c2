@@ -1,4 +1,5 @@
 const express = require('express');
+const users = require('./data/Users');
 const app = express();
 const port = 3000;
 
@@ -21,3 +22,12 @@ app.get('/', (req, res) => {
     });
 });
 
+// obtener todos los usuarios
+app.get('/users', (req, res) => {
+    res.json({
+        message: 'Lista de usuarios',
+        timestamp: new Date().toISOString(),
+        status: 'Success',
+        users: users
+    });
+});
